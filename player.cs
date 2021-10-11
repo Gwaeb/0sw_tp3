@@ -10,6 +10,14 @@ public class player : KinematicBody2D
     const int JUMPFORCE = 300;
     const int ACCEL = 10;
 
+    enum State
+    {
+        MOVE,
+        ATTACK
+    }
+
+    State state = State.MOVE;
+
 
     Vector2 vZero = new Vector2();
     Vector2 motion = new Vector2();
@@ -32,12 +40,17 @@ public class player : KinematicBody2D
 
     public override void _PhysicsProcess(float delta)
     {
-        motion.y += GRAVITY;
-
-        if (motion.y > MAXFALLSPEED)
+        switch (state)
         {
-            motion.y = MAXFALLSPEED;
+            case State.MOVE:
+                move_state();
+                break;
+            case State.ATTACK:
+                attack_state();
+                break;
         }
+
+
 
         if (facing_right)
         {
@@ -47,11 +60,22 @@ public class player : KinematicBody2D
         {
             currentSprite.FlipH = true;
         }
+    }
+
+    private void move_state()
+    {
+        motion.y += GRAVITY;
+
+        if (motion.y > MAXFALLSPEED)
+        {
+            motion.y = MAXFALLSPEED;
+        }
 
         motion.x = motion.Clamped(MAXSPEED).x;
 
         animationTree.Set("parameters/Idle/blend_position", motion);
         animationTree.Set("parameters/Run/blend_position", motion);
+        animationTree.Set("parameters/Attack/blend_position", motion);
 
         if (Input.IsActionPressed("ui_left"))
         {
@@ -73,8 +97,6 @@ public class player : KinematicBody2D
             animationState.Travel("Idle");
             //animPlayer.Play("Idle");
         }
-
-
 
         if (IsOnFloor())
             // On ne regarde qu'un seul fois et non le maintient de la touche
@@ -98,5 +120,22 @@ public class player : KinematicBody2D
         }
 
         motion = MoveAndSlide(motion, UP);
+
+        if (Input.IsActionPressed("ui_attack"))
+        {
+            state = State.ATTACK;
+        }
+    }
+
+    private void attack_state()
+    {
+        motion = Vector2.Zero;
+        animationState.Travel("Attack");
+
+    }
+
+    public void attack_animation_finished()
+    {
+        state = State.MOVE;
     }
 }
