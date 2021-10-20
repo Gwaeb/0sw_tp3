@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://assets/img/viking2.png" type="Texture" id=2]
@@ -140,6 +140,29 @@ blend_point_3/node = SubResource( 11 )
 blend_point_3/pos = Vector2( 0, -1 )
 blend_mode = 1
 
+[sub_resource type="AnimationNodeAnimation" id=29]
+animation = "fall"
+
+[sub_resource type="AnimationNodeAnimation" id=30]
+animation = "fall"
+
+[sub_resource type="AnimationNodeAnimation" id=31]
+animation = "fall"
+
+[sub_resource type="AnimationNodeAnimation" id=32]
+animation = "fall"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=33]
+blend_point_0/node = SubResource( 29 )
+blend_point_0/pos = Vector2( -1, 0 )
+blend_point_1/node = SubResource( 30 )
+blend_point_1/pos = Vector2( 0, 1 )
+blend_point_2/node = SubResource( 31 )
+blend_point_2/pos = Vector2( 1, 0 )
+blend_point_3/node = SubResource( 32 )
+blend_point_3/pos = Vector2( 0, -1 )
+blend_mode = 1
+
 [sub_resource type="AnimationNodeAnimation" id=13]
 animation = "Idle"
 
@@ -160,6 +183,29 @@ blend_point_1/pos = Vector2( 0, 1 )
 blend_point_2/node = SubResource( 15 )
 blend_point_2/pos = Vector2( 1, 0 )
 blend_point_3/node = SubResource( 16 )
+blend_point_3/pos = Vector2( 0, -1 )
+blend_mode = 1
+
+[sub_resource type="AnimationNodeAnimation" id=36]
+animation = "jump"
+
+[sub_resource type="AnimationNodeAnimation" id=37]
+animation = "jump"
+
+[sub_resource type="AnimationNodeAnimation" id=38]
+animation = "jump"
+
+[sub_resource type="AnimationNodeAnimation" id=39]
+animation = "jump"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=40]
+blend_point_0/node = SubResource( 36 )
+blend_point_0/pos = Vector2( -1, 0 )
+blend_point_1/node = SubResource( 37 )
+blend_point_1/pos = Vector2( 0, 1 )
+blend_point_2/node = SubResource( 38 )
+blend_point_2/pos = Vector2( 1, 0 )
+blend_point_3/node = SubResource( 39 )
 blend_point_3/pos = Vector2( 0, -1 )
 blend_mode = 1
 
@@ -194,15 +240,28 @@ blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=26]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=34]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=35]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=41]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=42]
+
 [sub_resource type="AnimationNodeStateMachine" id=27]
 states/Attack/node = SubResource( 12 )
-states/Attack/position = Vector2( 269, 250 )
+states/Attack/position = Vector2( 148, 234 )
+states/Fall/node = SubResource( 33 )
+states/Fall/position = Vector2( 467, 197 )
 states/Idle/node = SubResource( 17 )
 states/Idle/position = Vector2( 278, 108 )
+states/Jump/node = SubResource( 40 )
+states/Jump/position = Vector2( 304.23, 260 )
 states/Run/node = SubResource( 22 )
 states/Run/position = Vector2( 523, 108 )
-transitions = [ "Idle", "Run", SubResource( 23 ), "Run", "Idle", SubResource( 24 ), "Idle", "Attack", SubResource( 25 ), "Attack", "Idle", SubResource( 26 ) ]
+transitions = [ "Idle", "Run", SubResource( 23 ), "Run", "Idle", SubResource( 24 ), "Idle", "Attack", SubResource( 25 ), "Attack", "Idle", SubResource( 26 ), "Idle", "Fall", SubResource( 34 ), "Fall", "Idle", SubResource( 35 ), "Idle", "Jump", SubResource( 41 ), "Jump", "Idle", SubResource( 42 ) ]
 start_node = "Idle"
+graph_offset = Vector2( -414.77, 37 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=28]
 
@@ -252,5 +311,7 @@ tree_root = SubResource( 27 )
 anim_player = NodePath("../AnimationPlayer")
 parameters/playback = SubResource( 28 )
 parameters/Attack/blend_position = Vector2( 0, 0 )
+parameters/Fall/blend_position = Vector2( 0, 0 )
 parameters/Idle/blend_position = Vector2( 0, 0 )
+parameters/Jump/blend_position = Vector2( 0, 0 )
 parameters/Run/blend_position = Vector2( 0, 0 )

@@ -76,6 +76,8 @@ public class player : KinematicBody2D
         animationTree.Set("parameters/Idle/blend_position", motion);
         animationTree.Set("parameters/Run/blend_position", motion);
         animationTree.Set("parameters/Attack/blend_position", motion);
+        animationTree.Set("parameters/Fall/blend_position", motion);
+        animationTree.Set("parameters/Fall/blend_position", motion);
 
         if (Input.IsActionPressed("ui_left"))
         {
@@ -111,11 +113,13 @@ public class player : KinematicBody2D
         {
             if (motion.y < 0)
             {
-                animPlayer.Play("jump");
+                //animPlayer.Play("jump");
+                animationState.Travel("Jump");
             }
             else if (motion.y > 0)
             {
-                animPlayer.Play("fall");
+                //animPlayer.Play("fall");
+                animationState.Travel("Fall");
             }
         }
 
@@ -129,7 +133,8 @@ public class player : KinematicBody2D
 
     private void attack_state()
     {
-        motion = Vector2.Zero;
+        //motion = Vector2.Zero;
+        motion.x = 0;
         animationState.Travel("Attack");
 
     }
